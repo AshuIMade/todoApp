@@ -1,0 +1,22 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "ALX webstack potofolio project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend"
+  },
+  "author": "Ashenafi Yacob and Joy Emmanuel",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.1",
+    "sequelize": "^6.33.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
