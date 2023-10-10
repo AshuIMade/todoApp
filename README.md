@@ -7,5 +7,5 @@ This project is developed for ALX webstack portofolio task
 
 ## run cmd
 
-- npm run server
-- npm run client
+- For backend web API: npm run server
+- For frontend react: npm run client
