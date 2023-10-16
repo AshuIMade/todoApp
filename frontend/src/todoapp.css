@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Jacques+Francois&family=Oleo+Script:wght@400;700&display=swap');
+:root {
+  --background: #FEF9D7;
+  --primary-btn: #243DF9;
+  --secondary-btn: #F7C8FE;
+  --accent: #AACCCC;
+  --text-color: #141201;
+  --primary-btn-text: #ffffff;
+}
+body {
+  background-color: var(--background)
+}
+.mainTitle {
+  margin: 20px auto;
+  text-align: center;
+  padding: 110px;
+}
+.mainTitle h1 {
+  font-family: Oleo Script;
+  font-size: 76px;
+}
+.mainBtn {
+  width: 150px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: var(--primary-btn);
+  color: var(--primary-btn-text);
+  font-family: Oleo Script;
+  font-size: 18px;
+}
