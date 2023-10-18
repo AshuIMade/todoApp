@@ -1,7 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const db = require('../model');
-const Goal = db.goals;
-const User = db.persons;
+const dal = require('../dal/todoDal');
 /**
  * @desc get Todos
  * @route /api/todos
@@ -9,7 +7,9 @@ const User = db.persons;
  * @param res 
  */
 const getTodos = asyncHandler(async (req, res) => { 
-  const goals = await Goal.findAll({});
+  console.log("hello-----------****")
+  const goals = await dal.getAll();
+  //console.log("hello-----------****"+goals)
   res.status(200).json(goals);
 });
 /**
@@ -30,8 +30,8 @@ const postTodo =asyncHandler( async (req, res) => {
     priority: req.body.priority,
     status: req.body.status
   };
-  const createdGoal = await Goal.create(goal);
-  res.status(200).json(createdGoal);
+ // const createdGoal = await Goal.create(goal);
+  res.status(200).json(goal);
 });
 /**
  * @desc update Todo
@@ -41,7 +41,7 @@ const postTodo =asyncHandler( async (req, res) => {
  */
 const updateTodo = asyncHandler(async (req, res) => { 
   const id = req.params.id;
-  const goal = await Goal.update(req.body, { where: { id: id } });
+  //const goal = await Goal.update(req.body, { where: { id: id } });
   res.status(200).json(goal);
 });
 /**
@@ -52,7 +52,7 @@ const updateTodo = asyncHandler(async (req, res) => {
  */
 const deleteTodo = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  await Goal.destroy({ where: { id: id } });
+  //await Goal.destroy({ where: { id: id } });
   res.status(200).json({ message: `goal with id : ${req.params.id} is deleted!` });
 });
 

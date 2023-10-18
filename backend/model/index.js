@@ -1,3 +1,12 @@
+/**var models;
+(function (models) {
+  (function (Init) {
+
+   })(models.Init || (models.Init = {}));
+  var Init = models.Init;
+})(models ||(models={}));
+*/
+
 const dbConfig = require('../config/dbConfig');
 const { Sequelize, DataTypes } = require('sequelize');
 
@@ -16,6 +25,7 @@ const sequelize = new Sequelize(
     }
   }
 );
+
 sequelize.authenticate()
   .then(() => {
     console.log('connected to mysql DB ');
@@ -24,16 +34,19 @@ sequelize.authenticate()
     console.log('Error in MysqlDb connection:' + error);
   });
 
-const db = {};
 
+const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.persons = require('./person')(sequelize, DataTypes);
-db.goals = require('./goal')(sequelize, DataTypes); 
+db.users = require('./person')(sequelize, DataTypes);
+db.todos = require('./goal')(sequelize, DataTypes); 
+
 db.sequelize.sync({ force: false })
   .then(
     () => {
       console.log('resync is done...');
     });
 
+
+    
 module.exports = db

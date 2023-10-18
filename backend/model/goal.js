@@ -1,33 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
-  const Goal = sequelize.define("goal", {
+  const Todo = sequelize.define("todo", {
     title: {
-      type: DataTypes.STRING,
-      allowNull:false
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull:true
-    },
-    priority: {
-      type: DataTypes.STRING,
-      allowNull:true
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull:false
-    },
-    createdDate: {
-      type: DataTypes.DATE,
-      allowNull:true
-    },
-    startDate: {
-      type: DataTypes.DATE,
-      allowNull:true
-    },
-    endDate: {
-      type: DataTypes.DATE,
-      allowNull:true
-    }    
+    type: DataTypes.STRING,
+    required: [true, 'Please add your the title']
+  },
+  description: {
+    type: DataTypes.STRING,
+    required: false
+  },
+  priority: {
+    type: DataTypes.STRING,
+    required: [true, 'Please add set priority']
+  },
+  status: {
+    type: DataTypes.STRING,
+    required: false
+  },
+  createdDate: {
+    type: DataTypes.DATE,
+    required: false
+  },
+  startDate: {
+    type: DataTypes.DATE,
+    required: [true, 'Please add starting date']
+  },
+  endDate: {
+    type: DataTypes.DATE,
+    required: [true, 'Please add end date']
+  }   
   });
-  return Goal;
+  return Todo;
 }
