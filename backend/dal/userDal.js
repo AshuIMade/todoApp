@@ -4,8 +4,8 @@ const selDb = Seldb.SelectedDb();
 
 const getAll = async function(){ 
   console.log("hello-----------++++++++++++++++++++")
-  const goals = await selDb.getAll();
-  return goals;
+  const users = await selDb.getAll();
+  return users;
   //console.log("hello-----------****"+goals)
   //res.status(200).json(goals);
 }
@@ -21,24 +21,17 @@ const getByCondition = async function(req, res){
   //console.log("hello-----------****"+goals)
   //res.status(200).json(goals);
 }
-const Create = async function(req, res){ 
+const createUser = async function(user){ 
   console.log("hello-----------++++++++++++++++++++");
-  const created = await selDb.create();
+  const created = await selDb.create(user);
   return created;
-
-  //const goals = await user.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
 }
-const Update = async function(user){ 
+const updateUser = async function(user){ 
   console.log("hello-----------++++++++++++++++++++");
   const updated = await selDb.update(user);
   return updated;
-  //const goals = await user.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
 }
-const Delete = async function(value){ 
+const deleteUser = async function(value){ 
   console.log("hello-----------++++++++++++++++++++");
   const result = await selDb.delete(value);
   return result;
@@ -54,8 +47,8 @@ module.exports = {
   getByCondition,
   getAll,
   getOne,
-  Create,
-  Update,
-  Delete
+  createUser,
+  updateUser,
+  deleteUser
 }
 

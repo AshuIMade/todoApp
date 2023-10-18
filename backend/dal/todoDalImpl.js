@@ -18,12 +18,26 @@ var TodoDal;
       };
       
       SequelizeDB.prototype.create = async function (todo) {
+        console.log("So its not responding" + todo);
         const created = await this.Todo.create(todo)
         return created;
       };
       SequelizeDB.prototype.update = async function (todo) {
         let id = todo.id;
-        const updated = await this.Todo.update(todo, { where: { id: id } });
+        const todoUpadated = {
+          title: todo.title    
+        }
+        /**
+         *       description: todo.description,
+          priority: todo.priority,
+          status: todo.status,
+          createdDate: todo.createdDate,
+          startDate: todo.startDate,
+          endDate: todo.endDate
+         */
+        console.log("Id is good " + todo.id);
+        console.log("Title " + todo.title);
+        const updated = await this.Todo.update(todoUpadated, { where: { id: id } });
         return updated;
       };
       SequelizeDB.prototype.delete = async function (value) {

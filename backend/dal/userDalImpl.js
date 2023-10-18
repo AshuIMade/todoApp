@@ -14,21 +14,30 @@ var UserDal;
         this.User = this.db.userInit();
       };
       SequelizeDB.prototype.getAll = async function () {
-        console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWW")
-        let Users;
-        this.User.findAll().then(users => { 
-          Users = users;
-          console.log(users);
-        }).catch(err=>console.log(err))
-        return Users;
+        console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWW");
+        const users = await this.User.findAll({});
+        //let Users;
+        //this.User.findAll().then(users => { 
+          //Users = users;
+          //console.log(users);
+        //}).catch(err => console.log(err))
+        //console.log(Users);
+        return users;
       };
       SequelizeDB.prototype.create = async function (user) {
+        console.log("-----we arrive at flying duch man------"+user.firstName);
         const created = await this.User.create(user)
         return created;
       };
       SequelizeDB.prototype.update = async function (user) {
         let id = user.id;
-        const updated = await this.User.update(user, { where: { id: id } });
+        const userUpadated = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          password: user.password          
+        }
+        const updated = await this.User.update(userUpadated, { where: { id: id } });
         return updated;
       };
       SequelizeDB.prototype.delete = async function (value) {

@@ -8,9 +8,8 @@ const dal = require('../dal/todoDal');
  */
 const getTodos = asyncHandler(async (req, res) => { 
   console.log("hello-----------****")
-  const goals = await dal.getAll();
-  //console.log("hello-----------****"+goals)
-  res.status(200).json(goals);
+  const todos = await dal.getAll();
+  res.status(200).json(todos);
 });
 /**
  * @desc post Todo
@@ -23,15 +22,18 @@ const postTodo =asyncHandler( async (req, res) => {
     //res.status(400);
     //throw new Error('please add some text');
   //}
-  //console.log(req.body); 
-  const goal = {
+  console.log("----Hello-----"); 
+  const todo = {
     title: req.body.title,
     description: req.body.description,
     priority: req.body.priority,
-    status: req.body.status
+    status: req.body.status,
+    createdDate: req.body.createdDate,
+    startDate: req.body.startDate,
+    endDate:req.body.endDate
   };
- // const createdGoal = await Goal.create(goal);
-  res.status(200).json(goal);
+ const created = await dal.createTodo(todo);
+  res.status(200).json(created);
 });
 /**
  * @desc update Todo
@@ -40,9 +42,20 @@ const postTodo =asyncHandler( async (req, res) => {
  * @param res 
  */
 const updateTodo = asyncHandler(async (req, res) => { 
-  const id = req.params.id;
-  //const goal = await Goal.update(req.body, { where: { id: id } });
-  res.status(200).json(goal);
+  console.log("-------I think we can't even reach here-------+++---------")
+  //const id = req.params.id;
+  const todo = {
+    id:req.params.id,
+    title: req.body.title,
+    description: req.body.description,
+    priority: req.body.priority,
+    status: req.body.status,
+    createdDate: req.body.createdDate,
+    startDate: req.body.startDate,
+    endDate:req.body.endDate
+  };
+  const updated =await dal.updateTodo(todo)
+  res.status(200).json(updated);
 });
 /**
  * @desc delete Todo
@@ -52,8 +65,8 @@ const updateTodo = asyncHandler(async (req, res) => {
  */
 const deleteTodo = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  //await Goal.destroy({ where: { id: id } });
-  res.status(200).json({ message: `goal with id : ${req.params.id} is deleted!` });
+  const result = await dal.deleteTodo(id);
+  res.status(200).json({ message: `goal with id : ${req.params.id} is deleted ${result}` });
 });
 
 
