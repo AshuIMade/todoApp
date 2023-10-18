@@ -78,8 +78,11 @@ var UserDal;
       function Db() {
         //this.SelectedDB = new TodoDal.RelDb.SequelizeDB();
       };
-      Db.prototype.SelectedDb = function () {
-        console.log("********did we arrive here*******");
+      Db.prototype.SelectedDb = function (value) {
+        console.log("********what do we have here*******");
+        if (value === "mongs") {
+          return new UserDal.NoSqlDb.MongooseDb();          
+        }
         return new UserDal.RelDb.SequelizeDB();
       };
       return Db;

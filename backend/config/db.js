@@ -97,13 +97,11 @@ var dbms;
       /**Connect With Proper Db */
       DbConfigConnect.prototype.getDb = function (value) {
         console.log("--did we get here---");
-        if (value === "seqlz") {          
-          return new dbms.Relational.Sequelizer();
-        } else if (value === "mongs") {
+       if (value === "mongs") {
           return new dbms.NoSql.Mongoose();
-        } else {
-          return new dbms.Relational.Sequelizer();
         }
+        return new dbms.Relational.Sequelizer();
+        
       };
       return DbConfigConnect;
     })();

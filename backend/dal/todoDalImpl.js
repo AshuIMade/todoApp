@@ -12,7 +12,7 @@ var TodoDal;
         this.Todo = this.db.todoInit();//userInit();
       };
       SequelizeDB.prototype.getAll = async function () {
-        console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWW")
+        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         const Todos = await this.Todo.findAll({});
         return Todos;
       };
@@ -74,9 +74,12 @@ var TodoDal;
       function Db() {
         //this.SelectedDB = new TodoDal.RelDb.SequelizeDB();
       };
-      Db.prototype.SelectedDb = function () {
+      Db.prototype.SelectedDb = function (value) {
         console.log("********did we arrive here*******");
-        return new TodoDal.RelDb.SequelizeDB();
+        if (value === "mongs") {
+          return new TodoDal.NoSqlDb.MongooseDb();
+        }
+          return new TodoDal.RelDb.SequelizeDB();        
       };
       return Db;
     })();
@@ -89,60 +92,3 @@ var TodoDal;
 module.exports = {
   TodoDalImpl: TodoDal
 }
-/**
-const database = new DB.ConfigConnect.DbConfigConnect();
-const db = database.getDb(orm);
-db.connect();
-const Todo = db.todoInit();//userInit();
-
-
-const getAll = async function(req, res){ 
-  console.log("hello-----------++++++++++++++++++++")
-  const goals = await Todo.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
-}
-const getOne = async function(req, res){ 
-  console.log("hello-----------++++++++++++++++++++")
-  const goals = await user.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
-}
-const getByCondition = async function(req, res){ 
-  console.log("hello-----------++++++++++++++++++++Get By Condition")
-  const goals = await user.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
-}
-const Create = async function(req, res){ 
-  console.log("hello-----------++++++++++++++++++++")
-  const goals = await user.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
-}
-const Update = async function(req, res){ 
-  console.log("hello-----------++++++++++++++++++++")
-  const goals = await user.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
-}
-const Delete = async function(req, res){ 
-  console.log("hello-----------++++++++++++++++++++")
-  const goals = await user.findAll({});
-  //console.log("hello-----------****"+goals)
-  //res.status(200).json(goals);
-}
-
-
-
-
-module.exports = {
-  getByCondition,
-  getAll,
-  getOne,
-  Create,
-  Update,
-  Delete
-}
-
-*/
