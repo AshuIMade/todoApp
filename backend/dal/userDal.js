@@ -1,6 +1,6 @@
-const UserDalImpl = require('./userDalImpl').UserDalImpl;
-const Seldb = new UserDalImpl.SelDb.Db();
-const selDb = Seldb.SelectedDb();
+//const UserDalImpl = require('./userDalImpl').UserDalImpl;
+//const Seldb = new UserDalImpl.SelDb.Db();
+//const selDb = Seldb.SelectedDb();
 
 const getAll = async function(){ 
   console.log("hello-----------++++++++++++++++++++")

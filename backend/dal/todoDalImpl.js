@@ -1,5 +1,5 @@
-const DB = require('../config/db').DBMS;
-const orm = process.env.ORM || 'mongs'; // the other oprtion is 'seqlz'
+//const DB = require('../config/db').DBMS;
+//const orm = process.env.ORM || 'mongs'; // the other oprtion is 'seqlz'
 
 var TodoDal;
 (function (TodoDal) {
@@ -10,6 +10,8 @@ var TodoDal;
         this.db = this.database.getDb(orm);
         this.db.connect();
         this.Todo = this.db.todoInit();//userInit();
+        this.User = this.db.userInit();
+        
       };
       SequelizeDB.prototype.getAll = async function () {
         console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")

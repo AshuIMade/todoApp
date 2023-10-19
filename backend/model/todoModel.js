@@ -1,32 +1,33 @@
-const todo = {
-  title: {
-    type: String,
+module.exports = (sequelize, DataTypes) => {
+  const Todo = sequelize.define("todo", {
+    title: {
+    type: DataTypes.STRING,
     required: [true, 'Please add your the title']
   },
   description: {
-    type: String,
+    type: DataTypes.STRING,
     required: false
   },
   priority: {
-    type: String,
+    type: DataTypes.STRING,
     required: [true, 'Please add set priority']
   },
   status: {
-    type: String,
+    type: DataTypes.STRING,
     required: false
   },
   createdDate: {
-    type: Date,
+    type: DataTypes.DATE,
     required: false
   },
   startDate: {
-    type: Date,
+    type: DataTypes.DATE,
     required: [true, 'Please add starting date']
   },
   endDate: {
-    type: Date,
+    type: DataTypes.DATE,
     required: [true, 'Please add end date']
   }
+  });
+  return Todo;
 }
-
-module.exports = todo

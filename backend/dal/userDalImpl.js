@@ -1,7 +1,7 @@
-const { where } = require('sequelize');
+//const { where } = require('sequelize');
 
-const DB = require('../config/db').DBMS;
-const orm = process.env.ORM || 'mongs'; // the other oprtion is 'seqlz'
+//const DB = require('../config/db').DBMS;
+//const orm = process.env.ORM || 'mongs'; // the other oprtion is 'seqlz'
 
 var UserDal;
 (function (UserDal) {

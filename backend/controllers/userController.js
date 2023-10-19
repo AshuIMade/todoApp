@@ -1,72 +1,171 @@
 const asyncHandler = require('express-async-handler');
-const dal = require('../dal/userDal');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const db = require('../model');
+const User = db.users;
+//const dal = require('../dal/userDal');
 /**
- * @desc get Todos
- * @route /api/todos
+ * @desc get all users for ad min purpose 
+ * @route get /api/v1/users
  * @param req
  * @param res 
  */
 const getUsers = asyncHandler(async (req, res) => { 
-  console.log("hello-----------****######")
-  const users = await dal.getAll();
+  console.log("hello-----------****######");
+  const user = await User.findOne({ where: { id: req.user.id } });
+  if (!user||user) {
+    res.status(401);
+    throw new Error('user not found');
+  }
+  if (todo.user_id !== user.id) {
+    res.status(401);
+    throw new Error('User not authorized');
+  }
+  const users = await User.findAll();
   res.status(200).json(users);
 });
 /**
- * @desc post Todo
- * @route /api/todo
+ * @desc get myself
+ * @route get /api/v1/users/me
  * @param req
  * @param res 
  */
-const postUser =asyncHandler( async (req, res) => { 
-  //if (!req.body.text) {
-    //res.status(400);
-    //throw new Error('please add some text');
-  //}
-  //console.log(req.body); 
-  const user = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password
-  };
- const createdUser = await dal.createUser(user);
-  res.status(200).json(createdUser);
+const getMe = asyncHandler(async (req, res) => { 
+  console.log("id::::::" + req.user.id)
+  const { id, firstName, lastName, email } = await User.findOne({ where: { id: req.user.id } });
+  res.status(200).json({
+    id: id,
+    firstName,
+    lastName,
+    email
+  });
 });
 /**
- * @desc update Todo
- * @route /api/todo/:id
+ * @desc Register user 
+ * @route post /api/v1/users
+ * @param req
+ * @param res 
+ */
+const registerUser = asyncHandler(async (req, res) => {
+    console.log("hello-----------****######");
+  /**Destructure the input*/
+  const { firstName, lastName, email, password } = req.body;
+  /**Check if the all the necessary fields exist*/
+  if (!firstName || !lastName || !email || !password) {
+    res.status(400);
+    throw new Error("Please add all the fields");
+  }
+  /**check if the user exists */
+  const userExists = await User.findOne({ where: { email: email } });
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+  /**Next Hash The password */
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  /**then create the user */
+  const user = await User.create({
+    firstName,
+    lastName,
+    email,
+    password:hashPassword
+  });
+  /**Then respond to the request */
+  if (user) {
+    res.status(201).json({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      token: generateToken(user.id)
+    })
+  } else {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
+});
+/**
+ * @desc login user 
+ * @route post /api/v1/users/login
+ * @param req
+ * @param res 
+ */
+const loginUser = asyncHandler(async (req, res) => { 
+  /** destructure the req */
+  const { email, password } = req.body;
+  /**identify the user by email  */
+  const user = await User.findOne({ where: { email: email } });
+  console.log(user);
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.status(200).json({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      token: generateToken(user.id)
+    });
+  } else {
+    res.status(400)
+    throw new Error('Invalid credentials');
+  }
+});
+/**
+ * @desc update user
+ * @route put /api/v1/users/:id
  * @param req+id
  * @param res 
  */
 const updateUser = asyncHandler(async (req, res) => { 
-   console.log("-------I think we can't even reach here-------+++---------")
-  //const id = req.params.id;
-  const user = {
-    id:req.params.id,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password
-  };
-  const updatedUser =await dal.updateUser(user)
+  console.log("-------I think we can't even reach here-------+++---------");
+  
+  const user = await User.findOne({ where: { id: req.user.id } });
+  if (!user) {
+    res.status(401);
+    throw new Error('user not found');
+  }
+  if (todo.user_id !== user.id) {
+    res.status(401);
+    throw new Error('User not authorized');
+  }
+  const updatedUser = await User.update(req.body, { where: { id: registerUser.params.id } });
   res.status(200).json(updatedUser);
 });
 /**
- * @desc delete Todo
- * @route /api/todo/:id
+ * @desc delete user
+ * @route delete /api/v1/users/:id
  * @param req+id
  * @param res 
  */
 const deleteUser = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-  const result = await dal.deleteUser(id);
+   const user = await User.findOne({ where: { id: req.user.id } });
+  if (!user) {
+    res.status(401);
+    throw new Error('user not found');
+  }
+  if (todo.user_id !== user.id) {
+    res.status(401);
+    throw new Error('User not authorized');
+  }
+  const result = await User.destroy({where:{id:req.params.id }});
   res.status(200).json({ message: `goal with id : ${req.params.id} is deleted ${result}` });
 });
+/**
+ * @desc Generate JWT 
+ * @param req+id
+ * @param res 
+ */
+const generateToken = (id) => {
+  console.log("id&&&&&&&"+id)
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+}
 
 
 module.exports = {
   getUsers,
-  postUser,
+  getMe,
+  loginUser,
+  registerUser,
   updateUser,
   deleteUser
 }

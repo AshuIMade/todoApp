@@ -1,6 +1,6 @@
-const TodoDalImpl = require('./todoDalImpl').TodoDalImpl;
-const Seldb = new TodoDalImpl.SelDb.Db();
-const selDb = Seldb.SelectedDb();
+//const TodoDalImpl = require('./todoDalImpl').TodoDalImpl;
+//const Seldb = new TodoDalImpl.SelDb.Db();
+//const selDb = Seldb.SelectedDb();
 
 const getAll = async function(req, res){ 
   console.log("hello-----------++++++++++++++++++++")
