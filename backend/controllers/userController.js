@@ -32,13 +32,8 @@ const getUsers = asyncHandler(async (req, res) => {
  */
 const getMe = asyncHandler(async (req, res) => { 
   console.log("id::::::" + req.user.id)
-  const { id, firstName, lastName, email } = await User.findOne({ where: { id: req.user.id } });
-  res.status(200).json({
-    id: id,
-    firstName,
-    lastName,
-    email
-  });
+  //const { id, firstName, lastName, email } = await User.findOne({ where: { id: req.user.id } });
+  res.status(200).json(req.user);
 });
 /**
  * @desc Register user 

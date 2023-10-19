@@ -51,12 +51,12 @@ const updateTodo = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Todo not found');
   }
-  const user = await User.findOne({ where: { id: req.user.id } });
-  if (!user) {
+  //const user = await User.findOne({ where: { id: req.user.id } });
+  if (!req.user) {
     res.status(401);
     throw new Error('user not found');
   }
-  if (todo.user_id !== user.id) {
+  if (todo.user_id !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized');
   }
@@ -75,12 +75,12 @@ const deleteTodo = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Todo not found');
   }
-  const user = await User.findOne({ where: { id: req.user.id } });
-  if (!user) {
+  //const user = await User.findOne({ where: { id: req.user.id } });
+  if (!req.user) {
     res.status(401);
     throw new Error('user not found');
   }
-  if (todo.user_id !== user.id) {
+  if (todo.user_id !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized');
   }
