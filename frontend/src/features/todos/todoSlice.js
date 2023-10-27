@@ -9,7 +9,7 @@ const initialState = {
   message: '',
 }
 
-// Create new goal
+// Create new todo
 export const createTodo = createAsyncThunk(
   'todos/create',
   async (todo, thunkAPI) => {
@@ -28,7 +28,7 @@ export const createTodo = createAsyncThunk(
   }
 )
 
-// Get user goals
+// Get user todos
 export const getTodos = createAsyncThunk(
   'todos/getAll',
   async (_, thunkAPI) => {
@@ -47,7 +47,7 @@ export const getTodos = createAsyncThunk(
   }
 )
 
-// Delete user goal
+// Delete user todo
 export const deleteTodo = createAsyncThunk(
   'todos/delete',
   async (id, thunkAPI) => {

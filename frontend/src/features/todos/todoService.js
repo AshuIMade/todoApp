@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000/api/v1/todos/'
 
-// Create new goal
+// Create new todo
 const createTodo = async (todo, token) => {
   const config = {
     headers: {
@@ -28,7 +28,7 @@ const getTodos = async (token) => {
   return response.data
 }
 
-// Delete user goal
+// Delete user todo
 const deleteTodo = async (todoId, token) => {
   const config = {
     headers: {
