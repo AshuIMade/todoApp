@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import {useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { createTodo } from '../features/todos/todoSlice'
 
-function TodoForm() {
+//{onAddTodo}
+function TodoForm({onAddTodo}) {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -12,8 +14,11 @@ function TodoForm() {
     startDate: '',
     endDate: ''
   })
-  const { title, description, priority, status, createdDate, startDate, endDate } = formData;
+  const { title, description, priority,createdDate, startDate, endDate } = formData;
 
+  //const { user } = useSelector((state) => state.auth)
+  
+    
   const dispatch = useDispatch();
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -24,22 +29,30 @@ function TodoForm() {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    
 
     const todo = {
       title,
       description,
       priority,
-      status,
+      status:"created",
       createdDate,
       startDate,
       endDate
-      }
+    }
+    console.log(todo.title+"&&&&&&&&&*******999999999"+todo.status+todo.createdDate)
     dispatch(createTodo(todo))
+    onAddTodo();
+    return () => {
+      dispatch(onAddTodo())
+    }
+    //const makecall = () => onAddTodo;
+    //onAddTodo()
     //setText('')
   }
 
   return (
-    <section className='form'>
+    <section className='form form_todo'>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
           <label htmlFor='text'>Title</label>
@@ -103,7 +116,7 @@ function TodoForm() {
         </div>
         <div className='form-group'>
           <button className='btn btn-block' type='submit'>
-            Add Todo
+            Submit
           </button>
         </div>
       </form>

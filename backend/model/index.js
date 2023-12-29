@@ -27,6 +27,13 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.todos = require('./todoModel.js')(sequelize, DataTypes);
 db.users = require('./userModel.js')(sequelize, DataTypes);
+
+/**db.sequelize.sync({ alter: true }).then(() => {
+          console.log("well well wll################################");
+        }).catch((error) => {
+          console.log(error)
+        });*/
+
 db.users.hasMany(db.todos, {
           foreignKey: 'user_id',
           as:'todo'
@@ -36,10 +43,6 @@ db.todos.belongsTo(db.users, {
           as:'user'          
         });
         
-/**db.sequelize.sync({ alter: true }).then(() => {
-          console.log("well well wll################################");
-        }).catch((error) => {
-          console.log(error)
-        });*/
+
 
 module.exports = db;

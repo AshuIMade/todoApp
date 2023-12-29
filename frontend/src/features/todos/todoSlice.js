@@ -15,6 +15,7 @@ export const createTodo = createAsyncThunk(
   async (todo, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
+      
       return await todoService.createTodo(todo, token)
     } catch (error) {
       const message =

@@ -1,0 +1,78 @@
+.todos{
+  width: 50rem;
+  margin-inline: auto;
+}
+/*---todo head---*/
+.container_todosHead{
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.todosHead {
+  display: flex;
+  gap: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.todosHead span {
+    background: transparent;
+    color: var(--color-grey-500);
+    font-size: 2rem;
+}
+.todosHead button {
+  background: transparent;
+  color: var(--color-grey-100);
+  font-size: 2rem;
+  cursor: pointer;
+}
+/*---todos body---*/
+.todos_wrapper{
+  margin-top: 0rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.todo,.container_todosHead{
+  background: var(--color-grey-500);
+  padding: 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.todo{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.todo_title-edit,.todo_description,.todo_dates-remove{
+  display: flex;
+  gap: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.todo button{
+  background: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+  border-radius: 25%;
+  padding: 0.1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.todo p{
+  margin-top: 1.5rem;
+}
+.todo h4 {
+  color: var(--color-secondary);
+}
+.todo h2{
+  text-align: center;
+}
+
+
+.form_todo{
+  background: var(--color-grey-500);
+  padding: 1rem;
+  border-radius: 1rem;
+}

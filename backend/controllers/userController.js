@@ -2,7 +2,8 @@ const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('../model');
-const User = db.users;
+const User = require('../model/user');
+//const User = db.users;
 //const dal = require('../dal/userDal');
 /**
  * @desc get all users for ad min purpose 
@@ -12,7 +13,8 @@ const User = db.users;
  */
 const getUsers = asyncHandler(async (req, res) => { 
   console.log("hello-----------****######");
-  const user = await User.findOne({ where: { id: req.user.id } });
+  let id = req.user.id;
+  const user = await User.find({  id:id  });
   if (!user||user) {
     res.status(401);
     throw new Error('user not found');
@@ -21,7 +23,7 @@ const getUsers = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not authorized');
   }
-  const users = await User.findAll();
+  const users = await User.find();
   res.status(200).json(users);
 });
 /**
@@ -51,7 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Please add all the fields");
   }
   /**check if the user exists */
-  const userExists = await User.findOne({ where: { email: email } });
+  const userExists = await User.findOne({email});
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
@@ -90,7 +92,7 @@ const loginUser = asyncHandler(async (req, res) => {
   /** destructure the req */
   const { email, password } = req.body;
   /**identify the user by email  */
-  const user = await User.findOne({ where: { email: email } });
+  const user = await User.findOne({ email  });
   console.log(user);
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
@@ -113,8 +115,8 @@ const loginUser = asyncHandler(async (req, res) => {
  */
 const updateUser = asyncHandler(async (req, res) => { 
   console.log("-------I think we can't even reach here-------+++---------");
-  
-  const user = await User.findOne({ where: { id: req.user.id } });
+  let id = req.user.id;
+  const user = await User.findById({ id });
   if (!user) {
     res.status(401);
     throw new Error('user not found');
@@ -123,7 +125,8 @@ const updateUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not authorized');
   }
-  const updatedUser = await User.update(req.body, { where: { id: registerUser.params.id } });
+  let upid = registerUser.params.id;
+  const updatedUser = await User.findByIdAndUpdate({ upid }, req.body, {new:true});
   res.status(200).json(updatedUser);
 });
 /**
@@ -133,7 +136,8 @@ const updateUser = asyncHandler(async (req, res) => {
  * @param res 
  */
 const deleteUser = asyncHandler(async (req, res) => {
-   const user = await User.findOne({ where: { id: req.user.id } });
+  let id = req.user.id
+   const user = await User.findById({id  });
   if (!user) {
     res.status(401);
     throw new Error('user not found');
@@ -142,7 +146,8 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not authorized');
   }
-  const result = await User.destroy({where:{id:req.params.id }});
+  //{where:{id:req.params.id }}
+  const result = await User.remove();
   res.status(200).json({ message: `goal with id : ${req.params.id} is deleted ${result}` });
 });
 /**
@@ -151,8 +156,9 @@ const deleteUser = asyncHandler(async (req, res) => {
  * @param res 
  */
 const generateToken = (id) => {
-  console.log("id&&&&&&&"+id)
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+  console.log("id&&&&&&&" + id)
+  let ids = id
+  return jwt.sign({ id: ids }, process.env.JWT_SECRET, { expiresIn: '30d' });
 }
 
 

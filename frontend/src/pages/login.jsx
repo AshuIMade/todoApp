@@ -63,7 +63,6 @@ function Login() {
         </h1>
         <p>Login and Add Todo List</p>
       </section>
-
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>

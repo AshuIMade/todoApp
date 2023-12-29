@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 const db = require('../model');
-const User = db.users;
-
+//const User = db.users;
+const User = require('../model/user');
 const protect = asyncHandler(async (req, res, next) => {
   let token
 
@@ -17,7 +17,8 @@ const protect = asyncHandler(async (req, res, next) => {
       console.log(process.env.JWT_SECRET);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       // Get user from the token
-      req.user = await User.findOne({ where: { id: decoded.id } });
+      let id = decoded.id
+      req.user = await User.findById(id);
       next();
     } catch (error) {
       console.log(error)

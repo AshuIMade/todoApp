@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
-import Image from '../images/Plan-pic-two.png'
+//import Image from '../images/Plan-pic-two.png'
+import Image from '../images/plan_pic.jpg'
+
 
 function MainHeader() {
   return (
