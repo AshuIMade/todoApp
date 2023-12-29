@@ -15,18 +15,18 @@ const sequelize = new Sequelize(
             }
           }
 );
-sequelize.authenticate()
+/***sequelize.authenticate()
           .then(() => {
             console.log('connected to mysql DB ');
           })
           .catch(error => {
             console.log('Error in MysqlDb connection:' + error);
           });
-const db = {}
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.todos = require('./todoModel.js')(sequelize, DataTypes);
-db.users = require('./userModel.js')(sequelize, DataTypes);
+const db = {}*/
+//db.Sequelize = Sequelize;
+//db.sequelize = sequelize;
+//db.todos = require('./todoModel.js')(sequelize, DataTypes);
+//db.users = require('./userModel.js')(sequelize, DataTypes);
 
 /**db.sequelize.sync({ alter: true }).then(() => {
           console.log("well well wll################################");
@@ -34,15 +34,15 @@ db.users = require('./userModel.js')(sequelize, DataTypes);
           console.log(error)
         });*/
 
-db.users.hasMany(db.todos, {
+/**db.users.hasMany(db.todos, {
           foreignKey: 'user_id',
           as:'todo'
         });
 db.todos.belongsTo(db.users, {
           foreignKey: 'user_id',
           as:'user'          
-        });
+        });*/
         
 
 
-module.exports = db;
+//module.exports = db;

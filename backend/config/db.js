@@ -150,8 +150,8 @@ var dbms;
 })(dbms || (dbms = {}));
 
 
-module.exports = {
+/**module.exports = {
     DBMS:dbms
-}
+}*/
 
 
