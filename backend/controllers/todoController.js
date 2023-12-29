@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const nodemailer = require('nodemailer');
-const db = require('../model');
+//const db = require('../model');
 const Todo = require('../model/todo');
 const User = require('../model/user');
 /**
